@@ -1,42 +1,51 @@
 # Setup — Post scheda business FR18
 
 La parte di automazione (workflow GitHub, script di pubblicazione, foto,
-didascalie) è già pronta in questo repository. Quello che segue sono i passaggi
-che **devi completare tu**, perché richiedono il tuo login Google come
-proprietario della scheda: non è qualcosa che un'automazione può fare al posto
-tuo, e Google richiede esplicitamente che sia il proprietario a farne
-richiesta.
+didascalie) è già pronta in questo repository.
 
-Metti in conto **da qualche giorno a qualche settimana** per l'approvazione di
-Google: non è un processo istantaneo.
+## Stato attuale
+
+- [x] Progetto Google Cloud creato: **FotoRoma18 Automazione**
+      (ID: `fotoroma18-automazione`, numero progetto: `873163525560`)
+- [x] API abilitate: My Business Account Management API, My Business Business
+      Information API
+- [x] Richiesta di accesso alle Business Profile API **inviata** a Google —
+      ID richiesta: `5-8305000040987`, tempi di revisione stimati da Google:
+      **7-10 giorni lavorativi**
+- [ ] Schermata di consenso OAuth (passo 4 sotto)
+- [ ] Credenziali OAuth / Client ID (passo 5 sotto)
+- [ ] Refresh token (passo 7 sotto — richiede il tuo login personale)
+- [ ] App Password Gmail per le notifiche email (passo 8 sotto)
+- [ ] Secret su GitHub (passo 9 sotto)
+
+Quello che segue sono i passaggi rimasti, alcuni dei quali **devi
+completarli tu** perché richiedono il tuo login Google personale (in
+particolare i passi 7 e 8) — Google richiede esplicitamente che sia il
+proprietario della scheda a farli.
 
 ## 1. Verifica di essere Owner (non Manager) della scheda
 
-Vai su [business.google.com](https://business.google.com), apri la scheda
-FotoRoma18 → Impostazioni → Utenti e assicurati che il tuo account sia
-**Proprietario**. Se sei solo gestore, la richiesta di accesso API verrà
-respinta.
+Già verificato: la scheda FotoRoma18 risulta verificata e associata
+all'account `fotoroma18@gmail.com` usato per la richiesta di accesso.
 
-La scheda deve inoltre essere verificata da **almeno 60 giorni**.
+## 2. Progetto Google Cloud — fatto
 
-## 2. Crea un progetto Google Cloud
+Progetto **FotoRoma18 Automazione** (`fotoroma18-automazione`, numero
+`873163525560`) già creato.
 
-1. Vai su [console.cloud.google.com](https://console.cloud.google.com)
-2. Crea un nuovo progetto (es. "FotoRoma18 Automazione")
-3. Annota il **numero di progetto** (Project number), ti servirà per la
-   richiesta di accesso
+## 3. API abilitate — fatto
 
-## 3. Abilita le API necessarie
-
-Nella libreria API del progetto, abilita:
-
-- **My Business Account Management API**
-- **My Business Business Information API**
-- **My Business API** (quella che espone `localPosts`)
+- My Business Account Management API ✅
+- My Business Business Information API ✅
+- L'API che espone `localPosts` (`mybusiness.googleapis.com`) non compare più
+  nella libreria API pubblica di Google Cloud: si sblocca automaticamente sul
+  progetto una volta che la richiesta di accesso (punto 6) viene approvata,
+  senza bisogno di un'attivazione manuale separata.
 
 ## 4. Configura la schermata di consenso OAuth
 
-In "API e servizi → Schermata consenso OAuth":
+In [console.cloud.google.com](https://console.cloud.google.com), progetto
+"FotoRoma18 Automazione" → "API e servizi → Schermata consenso OAuth":
 
 - Tipo: Esterno
 - Aggiungi il tuo indirizzo email come utente di test (finché l'app non è
@@ -50,30 +59,25 @@ In "API e servizi → Credenziali → Crea credenziali → ID client OAuth":
 - Tipo di applicazione: **Applicazione desktop**
 - Annota **Client ID** e **Client secret**
 
-## 6. Richiedi l'accesso alle Business Profile API
+## 6. Richiesta di accesso alle Business Profile API — inviata
 
-Ogni nuovo progetto Google Cloud parte con quota zero per queste API: le
-chiamate falliscono finché Google non approva la richiesta.
+Richiesta inviata il 2026-07-17 tramite il modulo ufficiale Google, con
+account `fotoroma18@gmail.com`, scheda **FotoRoma18**, progetto
+`873163525560`, sito `https://www.fotoroma18.it`.
 
-Compila il modulo ufficiale: cerca su Google "Google Business Profile API
-access request form" (o vai su
-[support.google.com/business](https://support.google.com/business) e cerca
-"Applying for Google Business Profile API access") e scegli **"Application
-for Basic API Access"**.
+- **ID richiesta: `5-8305000040987`**
+- Tempi di revisione stimati da Google: **7-10 giorni lavorativi**
+- Riceverai un'email di follow-up da Google quando la richiesta sarà stata
+  esaminata
 
-Punti a cui fare attenzione, perché causano rifiuto automatico:
-
-- Devi essere loggato con l'account **Owner**, non Manager
-- Il numero di progetto Google Cloud nel modulo deve essere lo stesso in cui
-  hai creato le credenziali OAuth
-- Descrivi il caso d'uso in modo specifico: "pubblicare automaticamente foto
-  del nostro studio fotografico (FotoRoma18) sulla nostra scheda Google
-  Business Profile tramite `accounts.locations.localPosts.create`", non frasi
-  generiche
+Puoi anche verificare lo stato di approvazione dalla console Google Cloud:
+vai su "API e servizi → Quote" e cerca le Business Profile API. Quota a 0
+QPM = non ancora approvato; quota a 300 QPM = approvato.
 
 ## 7. Ottieni il refresh token (in locale, una sola volta)
 
-Una volta approvato l'accesso, dal tuo Mac, dentro questo repository:
+Una volta approvato l'accesso (punto 6) e create le credenziali (punto 5),
+dal tuo Mac, dentro questo repository:
 
 ```bash
 GBP_CLIENT_ID="il-tuo-client-id" GBP_CLIENT_SECRET="il-tuo-client-secret" \
