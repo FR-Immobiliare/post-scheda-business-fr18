@@ -12,16 +12,22 @@ didascalie) è già pronta in questo repository.
 - [x] Richiesta di accesso alle Business Profile API **inviata** a Google —
       ID richiesta: `5-8305000040987`, tempi di revisione stimati da Google:
       **7-10 giorni lavorativi**
-- [ ] Schermata di consenso OAuth (passo 4 sotto)
-- [ ] Credenziali OAuth / Client ID (passo 5 sotto)
+- [x] Schermata di consenso OAuth configurata (tipo Esterno, scope
+      `business.manage` aggiunto, `fotoroma18@gmail.com` come utente di prova)
+- [x] Credenziali OAuth create — Client ID:
+      `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com`
+      (tipo Applicazione desktop, nome "Post scheda business FR18 - desktop").
+      Il **Client secret** non è stato salvato qui per sicurezza: recuperalo tu
+      da Google Cloud Console → API e servizi → Credenziali → clicca sul
+      client per vederlo
 - [ ] Refresh token (passo 7 sotto — richiede il tuo login personale)
 - [ ] App Password Gmail per le notifiche email (passo 8 sotto)
 - [ ] Secret su GitHub (passo 9 sotto)
 
-Quello che segue sono i passaggi rimasti, alcuni dei quali **devi
-completarli tu** perché richiedono il tuo login Google personale (in
-particolare i passi 7 e 8) — Google richiede esplicitamente che sia il
-proprietario della scheda a farli.
+Quello che segue sono i passaggi rimasti, che **devi completarli tu**
+perché richiedono il tuo login Google personale o l'inserimento diretto di
+credenziali — Google richiede esplicitamente che sia il proprietario della
+scheda a farli, e per policy di sicurezza non gestisco io token/password.
 
 ## 1. Verifica di essere Owner (non Manager) della scheda
 
@@ -42,22 +48,23 @@ Progetto **FotoRoma18 Automazione** (`fotoroma18-automazione`, numero
   progetto una volta che la richiesta di accesso (punto 6) viene approvata,
   senza bisogno di un'attivazione manuale separata.
 
-## 4. Configura la schermata di consenso OAuth
+## 4. Schermata di consenso OAuth — fatto
 
-In [console.cloud.google.com](https://console.cloud.google.com), progetto
-"FotoRoma18 Automazione" → "API e servizi → Schermata consenso OAuth":
+Configurata su Google Auth Platform, progetto "FotoRoma18 Automazione":
 
 - Tipo: Esterno
-- Aggiungi il tuo indirizzo email come utente di test (finché l'app non è
-  verificata, solo gli utenti di test possono autorizzarla)
-- Scope da aggiungere: `https://www.googleapis.com/auth/business.manage`
+- Email di assistenza e di contatto: `fotoroma18@gmail.com`
+- Scope aggiunto: `https://www.googleapis.com/auth/business.manage`
+- Utente di prova aggiunto: `fotoroma18@gmail.com`
 
-## 5. Crea le credenziali OAuth
+## 5. Credenziali OAuth — fatto
 
-In "API e servizi → Credenziali → Crea credenziali → ID client OAuth":
+Client OAuth creato (tipo Applicazione desktop):
 
-- Tipo di applicazione: **Applicazione desktop**
-- Annota **Client ID** e **Client secret**
+- **Client ID**: `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com`
+- **Client secret**: da recuperare tu su
+  [console.cloud.google.com/auth/clients](https://console.cloud.google.com/auth/clients?project=fotoroma18-automazione),
+  clicca su "Post scheda business FR18 - desktop" per visualizzarlo
 
 ## 6. Richiesta di accesso alle Business Profile API — inviata
 
@@ -80,7 +87,8 @@ Una volta approvato l'accesso (punto 6) e create le credenziali (punto 5),
 dal tuo Mac, dentro questo repository:
 
 ```bash
-GBP_CLIENT_ID="il-tuo-client-id" GBP_CLIENT_SECRET="il-tuo-client-secret" \
+GBP_CLIENT_ID="873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com" \
+GBP_CLIENT_SECRET="il-client-secret-che-hai-recuperato-al-passo-5" \
   node get-refresh-token.mjs
 ```
 
@@ -118,8 +126,8 @@ valori ottenuti ai passi precedenti — evita di condividerli in chat):
 
 | Secret | Valore |
 |---|---|
-| `GBP_CLIENT_ID` | Client ID OAuth (passo 5) |
-| `GBP_CLIENT_SECRET` | Client secret OAuth (passo 5) |
+| `GBP_CLIENT_ID` | `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com` |
+| `GBP_CLIENT_SECRET` | Client secret OAuth (passo 5 — recuperalo dalla console) |
 | `GBP_REFRESH_TOKEN` | Refresh token (passo 7) |
 | `GBP_ACCOUNT_ID` | es. `accounts/106xxxxxxxxxxxxxxxxx` (passo 7) |
 | `GBP_LOCATION_ID` | es. `locations/98xxxxxxxxxxxxxxxxx` (passo 7) |
