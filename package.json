@@ -1,0 +1,9 @@
+{
+  "name": "post-scheda-business-fr18",
+  "private": true,
+  "type": "module",
+  "description": "Automazione: pubblica 2 post a settimana sulla scheda Google Business Profile di FotoRoma18",
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  }
+}

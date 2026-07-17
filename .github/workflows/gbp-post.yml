@@ -22,6 +22,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
+
+      - name: Installa dipendenze
+        run: npm ci
 
       - name: Pubblica post
         env:
@@ -30,6 +34,9 @@ jobs:
           GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
           GBP_ACCOUNT_ID: ${{ secrets.GBP_ACCOUNT_ID }}
           GBP_LOCATION_ID: ${{ secrets.GBP_LOCATION_ID }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          EMAIL_TO: "fotoroma18@gmail.com"
           IMAGE_BASE_URL: "https://fr-immobiliare.github.io/post-scheda-business-fr18"
           BUSINESS_URL: "https://www.fotoroma18.it"
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}

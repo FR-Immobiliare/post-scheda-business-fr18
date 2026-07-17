@@ -10,6 +10,7 @@ pagamento.
 - **Script di pubblicazione**: [`publish-post.mjs`](./publish-post.mjs) — sceglie foto+didascalia in base alla data e chiama l'API di Google Business Profile
 - **Hosting immagini**: GitHub Pages di questo stesso repo (gratuito)
 - **Scheduler**: [`.github/workflows/gbp-post.yml`](./.github/workflows/gbp-post.yml) — GitHub Actions, gratuito per repo pubblici
+- **Notifiche**: mail a `fotoroma18@gmail.com` ad ogni pubblicazione riuscita o fallita ([`notify.mjs`](./notify.mjs), via SMTP Gmail)
 
 Repository separato dal sito [FotoRoma18.it](https://www.fotoroma18.it):
 questa automazione non tocca mai il codice o il deploy del sito.

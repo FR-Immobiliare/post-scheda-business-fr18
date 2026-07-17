@@ -87,12 +87,30 @@ Google proprietario della scheda, autorizza l'app. Lo script stamperà:
 - l'elenco di `accounts/...` e `locations/...` collegati al tuo account, da
   cui prendere `GBP_ACCOUNT_ID` e `GBP_LOCATION_ID`
 
-## 8. Imposta i secret su GitHub
+## 8. Crea un App Password Gmail per le notifiche email
+
+L'automazione manda una mail a `fotoroma18@gmail.com` ad ogni pubblicazione
+(riuscita o fallita). Per farlo usa l'SMTP di Gmail, che richiede un **App
+Password** (non la tua password normale):
+
+1. Vai su [myaccount.google.com/security](https://myaccount.google.com/security)
+   con l'account `fotoroma18@gmail.com`
+2. Attiva la **Verifica in due passaggi** se non è già attiva (obbligatoria
+   per generare un App Password)
+3. Vai su [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords),
+   crea un nuovo App Password (nome a piacere, es. "Post scheda business FR18")
+4. Annota la password di 16 caratteri generata
+
+Questo passaggio è del tutto separato e indipendente dalla richiesta di
+accesso alle Business Profile API (punto 6): puoi farlo subito, non serve
+aspettare l'approvazione di Google.
+
+## 9. Imposta i secret su GitHub
 
 Nel repository GitHub `FR-Immobiliare/post-scheda-business-fr18` → Settings →
-Secrets and variables → Actions, crea questi 5 secret (fallo tu direttamente
+Secrets and variables → Actions, crea questi 7 secret (fallo tu direttamente
 su GitHub, via interfaccia web o `gh secret set NOME_SECRET`, incollando i
-valori ottenuti al passo precedente — evita di condividerli in chat):
+valori ottenuti ai passi precedenti — evita di condividerli in chat):
 
 | Secret | Valore |
 |---|---|
@@ -101,8 +119,10 @@ valori ottenuti al passo precedente — evita di condividerli in chat):
 | `GBP_REFRESH_TOKEN` | Refresh token (passo 7) |
 | `GBP_ACCOUNT_ID` | es. `accounts/106xxxxxxxxxxxxxxxxx` (passo 7) |
 | `GBP_LOCATION_ID` | es. `locations/98xxxxxxxxxxxxxxxxx` (passo 7) |
+| `EMAIL_USER` | `fotoroma18@gmail.com` |
+| `EMAIL_APP_PASSWORD` | App Password di 16 caratteri (passo 8) |
 
-## 9. Testa l'automazione
+## 10. Testa l'automazione
 
 Da GitHub → Actions → "Pubblica post Google Business Profile (FR18)" → "Run
 workflow", lascia "dry_run" su `false` per un test reale, oppure `true` per

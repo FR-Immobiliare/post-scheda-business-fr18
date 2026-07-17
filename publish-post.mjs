@@ -6,6 +6,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { notifySuccess, notifyFailure } from "./notify.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const IMAGES_DIR = path.join(__dirname, "images");
@@ -139,9 +140,11 @@ async function main() {
   const accessToken = await getAccessToken();
   const result = await createLocalPost(accessToken, post);
   console.log("Post pubblicato:", result.name || result);
+  await notifySuccess(post, result);
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error(err);
+  await notifyFailure(err);
   process.exit(1);
 });
