@@ -1,0 +1,36 @@
+name: Pubblica post Google Business Profile (FR18)
+
+on:
+  schedule:
+    # 08:00 UTC = 9:00 circa a Roma (varia di un'ora con l'ora legale). Lunedì e giovedì.
+    - cron: "0 8 * * 1,4"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Esegui senza pubblicare davvero (solo log)"
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Pubblica post
+        env:
+          GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
+          GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
+          GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
+          GBP_ACCOUNT_ID: ${{ secrets.GBP_ACCOUNT_ID }}
+          GBP_LOCATION_ID: ${{ secrets.GBP_LOCATION_ID }}
+          IMAGE_BASE_URL: "https://fr-immobiliare.github.io/post-scheda-business-fr18"
+          BUSINESS_URL: "https://www.fotoroma18.it"
+          DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+        run: node publish-post.mjs
