@@ -21,8 +21,10 @@ didascalie) è già pronta in questo repository.
       da Google Cloud Console → API e servizi → Credenziali → clicca sul
       client per vederlo
 - [ ] Refresh token (passo 7 sotto — richiede il tuo login personale)
-- [ ] App Password Gmail per le notifiche email (passo 8 sotto)
-- [ ] Secret su GitHub (passo 9 sotto)
+- [x] App Password Gmail per le notifiche email (passo 8 sotto)
+- [ ] Secret su GitHub (passo 9 sotto) — **2 di 7 impostati**: `EMAIL_USER` ✅,
+      `EMAIL_APP_PASSWORD` ✅. Mancano `GBP_CLIENT_ID`, `GBP_CLIENT_SECRET`,
+      `GBP_REFRESH_TOKEN`, `GBP_ACCOUNT_ID`, `GBP_LOCATION_ID`
 
 Quello che segue sono i passaggi rimasti, che **devi completarli tu**
 perché richiedono il tuo login Google personale o l'inserimento diretto di
