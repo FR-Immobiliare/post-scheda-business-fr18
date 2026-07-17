@@ -14,13 +14,20 @@ didascalie) è già pronta in questo repository.
       **7-10 giorni lavorativi**
 - [x] Schermata di consenso OAuth configurata (tipo Esterno, scope
       `business.manage` aggiunto, `fotoroma18@gmail.com` come utente di prova)
-- [x] Credenziali OAuth create — Client ID:
-      `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com`
-      (tipo Applicazione desktop, nome "Post scheda business FR18 - desktop").
-      Il **Client secret** non è stato salvato qui per sicurezza: recuperalo tu
-      da Google Cloud Console → API e servizi → Credenziali → clicca sul
-      client per vederlo
-- [ ] Refresh token (passo 7 sotto — richiede il tuo login personale)
+- [x] Credenziali OAuth create — 2 client:
+      - `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com`
+        (tipo Applicazione desktop, "Post scheda business FR18 - desktop") —
+        creato per `get-refresh-token.mjs`, ma il Client secret è andato perso
+        (Google mostra i secret in chiaro solo una volta, subito dopo la
+        creazione — non riguardato in tempo)
+      - **`873163525560-bg052sa3lbc1p7krgntlsr0vqsouct46.apps.googleusercontent.com`**
+        (tipo Applicazione web, "Post scheda business FR18 - playground",
+        redirect URI `https://developers.google.com/oauthplayground`) — **è
+        questo il client da usare**, con [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
+        invece dello script locale, per evitare i problemi di quoting del
+        terminale col Client secret
+- [ ] Refresh token — **quasi fatto**, bloccato da un errore temporaneo
+      (vedi nota sotto)
 - [x] App Password Gmail per le notifiche email (passo 8 sotto)
 - [ ] Secret su GitHub (passo 9 sotto) — **2 di 7 impostati**: `EMAIL_USER` ✅,
       `EMAIL_APP_PASSWORD` ✅. Mancano `GBP_CLIENT_ID`, `GBP_CLIENT_SECRET`,
@@ -61,12 +68,14 @@ Configurata su Google Auth Platform, progetto "FotoRoma18 Automazione":
 
 ## 5. Credenziali OAuth — fatto
 
-Client OAuth creato (tipo Applicazione desktop):
+Client OAuth "Post scheda business FR18 - playground" creato (tipo
+Applicazione web, redirect URI `https://developers.google.com/oauthplayground`):
 
-- **Client ID**: `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com`
-- **Client secret**: da recuperare tu su
-  [console.cloud.google.com/auth/clients](https://console.cloud.google.com/auth/clients?project=fotoroma18-automazione),
-  clicca su "Post scheda business FR18 - desktop" per visualizzarlo
+- **Client ID**: `873163525560-bg052sa3lbc1p7krgntlsr0vqsouct46.apps.googleusercontent.com`
+- **Client secret**: già recuperato e inserito nell'OAuth Playground (punto 7).
+  Se ti serve di nuovo: [console.cloud.google.com/auth/clients](https://console.cloud.google.com/auth/clients?project=fotoroma18-automazione)
+  → client → icona (i) in alto a destra → "Add secret" → icona di copia
+  accanto al nuovo secret (visibile/copiabile solo subito dopo averlo creato)
 
 ## 6. Richiesta di accesso alle Business Profile API — inviata
 
@@ -83,23 +92,48 @@ Puoi anche verificare lo stato di approvazione dalla console Google Cloud:
 vai su "API e servizi → Quote" e cerca le Business Profile API. Quota a 0
 QPM = non ancora approvato; quota a 300 QPM = approvato.
 
-## 7. Ottieni il refresh token (in locale, una sola volta)
+## 7. Ottieni il refresh token — quasi fatto, riprendi da qui
 
-Una volta approvato l'accesso (punto 6) e create le credenziali (punto 5),
-dal tuo Mac, dentro questo repository:
+Invece dello script locale (il terminale ha dato troppi problemi di
+quoting con il Client secret), usiamo l'[OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
+di Google — tutto nel browser, nessun terminale:
+
+1. Apri [developers.google.com/oauthplayground](https://developers.google.com/oauthplayground/)
+2. Icona ⚙️ in alto a destra → spunta "Use your own OAuth credentials"
+3. **OAuth Client ID**: `873163525560-bg052sa3lbc1p7krgntlsr0vqsouct46.apps.googleusercontent.com`
+4. **OAuth Client secret**: incollalo (vedi punto 5 se l'hai perso)
+5. "Close"
+6. Campo "Input your own scopes": `https://www.googleapis.com/auth/business.manage`
+7. "Authorize APIs" → accedi/consenti con `fotoroma18@gmail.com`
+8. Step 2 → "Exchange authorization code for tokens" → compare il **Refresh token**
+
+**Nota**: al primo tentativo (17 luglio, ore 21 circa) è comparso l'errore
+`Errore 401: invalid_client — The OAuth client was not found`. È il ritardo
+di propagazione che Google stessa segnala alla creazione del client ("da
+cinque minuti a qualche ora"). Riprova semplicemente a rifare il punto 7
+(non serve ripetere la configurazione, resta salvata) — dovrebbe funzionare
+da solo dopo un po' di tempo.
+
+Una volta ottenuto il Refresh token, impostalo su GitHub (da terminale,
+incollando quando richiesto — mai nel comando):
 
 ```bash
-GBP_CLIENT_ID="873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com" \
-GBP_CLIENT_SECRET="il-client-secret-che-hai-recuperato-al-passo-5" \
-  node get-refresh-token.mjs
+cd "/Users/antoniopicariello/Documents/Cursor Repo/post-scheda-business-fr18"
+gh secret set GBP_REFRESH_TOKEN --repo FR-Immobiliare/post-scheda-business-fr18
+gh secret set GBP_CLIENT_SECRET --repo FR-Immobiliare/post-scheda-business-fr18
+gh secret set GBP_CLIENT_ID --repo FR-Immobiliare/post-scheda-business-fr18 --body "873163525560-bg052sa3lbc1p7krgntlsr0vqsouct46.apps.googleusercontent.com"
 ```
 
-Lo script apre un link: aprilo nel browser dove sei loggato con l'account
-Google proprietario della scheda, autorizza l'app. Lo script stamperà:
+Poi, sempre nel Playground, **Step 3** ("Configure request to API"):
 
-- il **refresh token**
-- l'elenco di `accounts/...` e `locations/...` collegati al tuo account, da
-  cui prendere `GBP_ACCOUNT_ID` e `GBP_LOCATION_ID`
+- Request URI: `https://mybusinessaccountmanagement.googleapis.com/v1/accounts`
+  → "Send the request" → nella risposta JSON, il campo `"name": "accounts/NNNNNNNNN"`
+  è il tuo `GBP_ACCOUNT_ID`
+- Poi Request URI: `https://mybusinessbusinessinformation.googleapis.com/v1/accounts/NNNNNNNNN/locations`
+  → nella risposta, `"name": "locations/NNNNNNNNN"` è il tuo `GBP_LOCATION_ID`
+
+Questi due non sono segreti (sono solo identificativi), quindi puoi anche
+scriverli direttamente in chat se vuoi che li imposti io.
 
 ## 8. Crea un App Password Gmail per le notifiche email
 
@@ -128,7 +162,7 @@ valori ottenuti ai passi precedenti — evita di condividerli in chat):
 
 | Secret | Valore |
 |---|---|
-| `GBP_CLIENT_ID` | `873163525560-a3kalrnh1qvlfrsjl0sjvcs2hb44m8cp.apps.googleusercontent.com` |
+| `GBP_CLIENT_ID` | `873163525560-bg052sa3lbc1p7krgntlsr0vqsouct46.apps.googleusercontent.com` |
 | `GBP_CLIENT_SECRET` | Client secret OAuth (passo 5 — recuperalo dalla console) |
 | `GBP_REFRESH_TOKEN` | Refresh token (passo 7) |
 | `GBP_ACCOUNT_ID` | es. `accounts/106xxxxxxxxxxxxxxxxx` (passo 7) |
