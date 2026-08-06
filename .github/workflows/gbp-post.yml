@@ -2,7 +2,7 @@ name: Pubblica post Google Business Profile (FR18)
 
 on:
   schedule:
-    # 08:00 UTC = 9:00 circa a Roma (varia di un'ora con l'ora legale). Lunedì e giovedì.
+    # 08:00 UTC = 9:00 circa a Roma (varia di un ora con l ora legale). Lunedi e giovedi.
     - cron: "0 8 * * 1,4"
   workflow_dispatch:
     inputs:
@@ -16,12 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - name: Installa dipendenze
@@ -39,5 +39,7 @@ jobs:
           EMAIL_TO: "fotoroma18@gmail.com"
           IMAGE_BASE_URL: "https://fr-immobiliare.github.io/post-scheda-business-fr18"
           BUSINESS_URL: "https://www.fotoroma18.it"
+          CTA_URL: "https://wa.me/393343089759?text=Ciao%2C%20ti%20scrivo%20dal%20profilo%20Google%20di%20FotoRoma18"
+          CTA_TYPE: "BOOK"
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
         run: node publish-post.mjs
