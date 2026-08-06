@@ -15,6 +15,9 @@ const IMAGES_DIR = path.join(__dirname, "images");
 const IMAGE_BASE_URL = process.env.IMAGE_BASE_URL || "https://fr-immobiliare.github.io/post-scheda-business-fr18";
 // Il sito vero e proprio, usato solo come link "Scopri di più" nel post.
 const BUSINESS_URL = process.env.BUSINESS_URL || "https://www.fotoroma18.it";
+// Dove porta il pulsante del post. WhatsApp converte molto meglio del sito.
+const CTA_URL = process.env.CTA_URL || BUSINESS_URL;
+const CTA_TYPE = process.env.CTA_TYPE || "LEARN_MORE";
 
 const DRY_RUN = process.env.DRY_RUN === "true";
 
@@ -106,7 +109,7 @@ async function createLocalPost(accessToken, post) {
   const body = {
     languageCode: "it",
     summary: post.caption,
-    callToAction: { actionType: "LEARN_MORE", url: BUSINESS_URL },
+    callToAction: { actionType: CTA_TYPE, url: CTA_URL },
     media: [{ mediaFormat: "PHOTO", sourceUrl: post.sourceUrl }],
     topicType: "STANDARD",
   };
