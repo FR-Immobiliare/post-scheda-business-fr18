@@ -1,0 +1,65 @@
+name: Aggiorna recensioni Google (FR18)
+
+# Ogni notte scarica le recensioni della scheda FotoRoma18 in reviews/fotoroma18.json.
+# Se sono cambiate, fa commit e (se c'è il secret CF_DEPLOY_HOOK_FR18) avvia
+# un nuovo deploy di fotoroma18.it, che al build legge il file aggiornato.
+
+on:
+  schedule:
+    - cron: "47 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gbp-reviews
+  cancel-in-progress: false
+
+jobs:
+  reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Scarica recensioni
+        env:
+          GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
+          GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
+          GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
+          GBP_ACCOUNT_ID: ${{ secrets.GBP_ACCOUNT_ID }}
+          GBP_LOCATION_ID: ${{ secrets.GBP_LOCATION_ID }}
+        run: node fetch-reviews.mjs
+
+      - name: Commit se cambiate
+        id: commit
+        run: |
+          if git diff --quiet -- reviews/ && [ -z "$(git ls-files --others --exclude-standard reviews/)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add reviews/
+          git commit -m "Recensioni Google aggiornate"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Rideploy fotoroma18.it
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          HOOK: ${{ secrets.CF_DEPLOY_HOOK_FR18 }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "CF_DEPLOY_HOOK_FR18 non impostato: il sito prenderà le recensioni al prossimo deploy."
+            exit 0
+          fi
+          # Aspetta che GitHub Pages pubblichi il nuovo file prima di far partire il build.
+          sleep 90
+          curl -fsS -X POST "$HOOK" > /dev/null && echo "Deploy avviato."
