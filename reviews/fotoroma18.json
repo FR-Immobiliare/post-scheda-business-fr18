@@ -2,8 +2,16 @@
   "source": "Google Business Profile",
   "placeUrl": "https://maps.app.goo.gl/VWSvbbjGwk254Cz67",
   "averageRating": 4.9,
-  "totalReviewCount": 622,
+  "totalReviewCount": 623,
   "reviews": [
+    {
+      "id": "AbFvOqkaFD9beTqtEkfPKVnbS31PPOwN_m7ORAkTqv3ClKXlp5j9L6KHwbCCyBUNeOXNMXAA97Zz",
+      "author": "Alessia M.",
+      "rating": 4,
+      "text": "Ottima esperienza! Cortesia disponibilità e professionalità e risultati desiderati raggiunti !",
+      "date": "2026-09-30T17:13:05.219155Z",
+      "reply": null
+    },
     {
       "id": "AbFvOqnAOq5aog_deJy_gd5qYu6Dl3YIKYuPewy2xQQrJnNq3YMsLNbpci_j1rZYDHkPc9Y5z9cV6Q",
       "author": "Monica D.",
