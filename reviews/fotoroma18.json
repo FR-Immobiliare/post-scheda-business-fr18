@@ -2,8 +2,16 @@
   "source": "Google Business Profile",
   "placeUrl": "https://maps.app.goo.gl/VWSvbbjGwk254Cz67",
   "averageRating": 4.9,
-  "totalReviewCount": 623,
+  "totalReviewCount": 624,
   "reviews": [
+    {
+      "id": "AbFvOqkEPcCq7XJMrjiWXrnVc64fsIsvWgz8PQXd0gsLYem3M3CxzSr5ZSCtufnNvvOhQ89idbavZQ",
+      "author": "Francesca C.",
+      "rating": 5,
+      "text": "Ho deciso di regalare Photobooth a mia figlia per il suo 18 compleanno ed è stata davvero un ottima scelta. È stata l'attrattiva della serata per adulti e ragazzi e mia figlia è stata felice di poter lasciare un ricordo della serata a tutti gli ospiti. Antonio una persona estremamente competente e professionale attento ad ogni nostra esigenza.\nConsigliatissimo per ogni giorno da ricordare!",
+      "date": "2026-10-14T18:53:27.424274Z",
+      "reply": null
+    },
     {
       "id": "AbFvOqmCgh2QG1rwaDpKm4znQJAuCSn8hoTxSlaE_NWspgqVxz55E-bZ9M5cMIdHUhlabwqdCB6x",
       "author": "Rosa P.",
