@@ -2,8 +2,16 @@
   "source": "Google Business Profile",
   "placeUrl": "https://maps.app.goo.gl/VWSvbbjGwk254Cz67",
   "averageRating": 4.9,
-  "totalReviewCount": 624,
+  "totalReviewCount": 625,
   "reviews": [
+    {
+      "id": "AbFvOqm_Q0JpGm6LAiHsnBDPzSaIDa7w-3LRXWG7911dqbt-xr2Rq1IqfUNP-ys0Tu7jt5X8J2PQ",
+      "author": "Michela M.",
+      "rating": 5,
+      "text": "Mi sono affidata a FotoRoma18 per scattare le foto durante la mia discussione di laurea, ha effettuato il servizio prima, durante e dopo la discussione di laurea. Sono soddisfatta del servizio, delle foto e delle tempistiche di consegna veloci.",
+      "date": "2026-10-26T20:35:01.134906Z",
+      "reply": null
+    },
     {
       "id": "AbFvOqkEPcCq7XJMrjiWXrnVc64fsIsvWgz8PQXd0gsLYem3M3CxzSr5ZSCtufnNvvOhQ89idbavZQ",
       "author": "Francesca C.",
