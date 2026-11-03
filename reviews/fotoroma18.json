@@ -2,8 +2,16 @@
   "source": "Google Business Profile",
   "placeUrl": "https://maps.app.goo.gl/VWSvbbjGwk254Cz67",
   "averageRating": 4.9,
-  "totalReviewCount": 625,
+  "totalReviewCount": 626,
   "reviews": [
+    {
+      "id": "AbFvOqnCwrALrSpOl_1cOt_LF4jZLuHmfYutK1a4GFahgwXeJa5rJ7R9aKmVnyMXtCEAzJ67pNqRvA",
+      "author": "Carmen M.",
+      "rating": 5,
+      "text": "Servizio impeccabile e foto bellissime!!\nAntonio è stato molto gentile e paziente durante la mia seduta di laurea, ero molto tesa ed ha saputo darmi i miei spazi e realizzare delle foto spontanee e non troppo impostate proprio come volevo. Anche tutti i miei ospiti sono entusiasti delle foto realizzate.. In pochi giorni mi ha inviato il lavoro finito e le foto sono davvero bellissime!\nConsigliatissimo!!",
+      "date": "2026-11-02T18:07:24.955912Z",
+      "reply": null
+    },
     {
       "id": "AbFvOqm_Q0JpGm6LAiHsnBDPzSaIDa7w-3LRXWG7911dqbt-xr2Rq1IqfUNP-ys0Tu7jt5X8J2PQ",
       "author": "Michela M.",
