@@ -2,8 +2,16 @@
   "source": "Google Business Profile",
   "placeUrl": "https://maps.app.goo.gl/VWSvbbjGwk254Cz67",
   "averageRating": 4.9,
-  "totalReviewCount": 626,
+  "totalReviewCount": 627,
   "reviews": [
+    {
+      "id": "AbFvOqmmYm7oxr8wKsXqYkre2AR4I7IcRIXvKPSoTxmGYMDa77ZZAlFsst_syCW0U2mwJmGpavo",
+      "author": "MARZIA S.",
+      "rating": 5,
+      "text": "Il 18esimo di mio figlio è stato anche meglio di come se lo aspettava. Grazie a Antonio e a tutti voi che avete reso magica e indimenticabile una festa in un luogo magico come i Casali di Capobianco",
+      "date": "2026-11-08T19:35:39.002939Z",
+      "reply": null
+    },
     {
       "id": "AbFvOqnCwrALrSpOl_1cOt_LF4jZLuHmfYutK1a4GFahgwXeJa5rJ7R9aKmVnyMXtCEAzJ67pNqRvA",
       "author": "Carmen M.",
