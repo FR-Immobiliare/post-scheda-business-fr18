@@ -2,8 +2,16 @@
   "source": "Google Business Profile",
   "placeUrl": "https://maps.app.goo.gl/VWSvbbjGwk254Cz67",
   "averageRating": 4.9,
-  "totalReviewCount": 627,
+  "totalReviewCount": 628,
   "reviews": [
+    {
+      "id": "AbFvOqmShJwKpSOdG25QHxQ6mjZEOURSGb_WGENTiqrIuyz6oeL_cs94hr-KnMM5Ack8TjfU9WdF",
+      "author": "Federica M.",
+      "rating": 5,
+      "text": "Un fotografo che non si limita a scattare foto, ma riesce a catturare emozioni, sguardi e momenti che raccontano molto più di mille parole. Riguardando le foto del diciottesimo di mia figlia, sembra di rivivere ogni istante e tutte le emozioni di quella serata. Perché le tue non sono semplici fotografie, ma ricordi che prendono vita ogni volta che li guardi. Complimenti davvero per la sensibilità e la passione che metti nel tuo lavoro!",
+      "date": "2026-11-19T13:37:25.169083Z",
+      "reply": null
+    },
     {
       "id": "AbFvOqmmYm7oxr8wKsXqYkre2AR4I7IcRIXvKPSoTxmGYMDa77ZZAlFsst_syCW0U2mwJmGpavo",
       "author": "MARZIA S.",
